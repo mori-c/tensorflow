@@ -36,5 +36,8 @@ Notes:
 <br />
 
 Here's Rangle.io's take on building AI applications with tensorflow.js
-![screencapture article ai rangle.io tensorflow.js](img/rangle-io-blog-bringing-artificial-intelligence-to-the-browser-with-tensorflow-js-2019-05-02-18_34_06.png)
+
+[![screencapture article ai rangle.io tensorflow.js](img/rangleio-article-thumb)](https://github.com/mori-c/tensorflow/blob/master/img/rangle-io-blog-bringing-artificial-intelligence-to-the-browser-with-tensorflow-js-2019-05-02-18_34_06.png)
+
+
 
