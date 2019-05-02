@@ -1,6 +1,7 @@
 # tensorflow
 ML Introductory Practice Using Tensorflow
 
+<<<<<<< HEAD
 
 # Setup
 
@@ -30,3 +31,6 @@ $ python3 -m http.server
 
 Here's Rangle.io's take on building AI applications with tensorflow.js
 ![screencapture article ai rangle.io tensorflow.js](img/rangle-io-blog-bringing-artificial-intelligence-to-the-browser-with-tensorflow-js-2019-05-02-18_34_06.png)
+=======
+[Origin](https://github.com/RyanMarchildon/tfjs-torontoai-lecture) Tutorial
+>>>>>>> 4918ea51275e856c5992f4ca3e7c37007c864213
