@@ -7,4 +7,7 @@ In this example, we'll use a pretrained [MobileNet](https://github.com/tensorflo
 using an internal mobilenet activation to predict 4 different classes from the
 webcam defined by the user.
 
-[See this example live!](https://storage.googleapis.com/tfjs-examples/webcam-transfer-learning/dist/index.html)
+[See Image Classification example live!](https://storage.googleapis.com/tfjs-examples/webcam-transfer-learning/dist/index.html)
+
+
+

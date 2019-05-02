@@ -45,12 +45,16 @@ let model;
 // Loads mobilenet and returns a model that returns the internal activation
 // we'll use as input to our classifier model.
 async function loadTruncatedMobileNet() {
+  // tf.loadModel = sharding to easy load in browser
+  // python h5 file (forzen weights model) can convert into a js file to load into the browser
   const mobilenet = await tf.loadModel(
     'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json' );
 
   // Return a model that outputs an internal activation.
   const layer = mobilenet.getLayer( 'conv_pw_13_relu' );
   return tf.model( {
+    // layer.output sources a few layers deep
+    // transfer learning: bring pretrained model, creates a new output as a new model by training a certain section of features trained in the model
     inputs: mobilenet.inputs,
     outputs: layer.output
   } );
@@ -80,12 +84,18 @@ async function train() {
   // Creates a 2-layer fully connected model. By creating a separate model,
   // rather than adding layers to the mobilenet model, we "freeze" the weights
   // of the mobilenet model, and only train weights from the new model.
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // flattens model, and add few additional dense layers into the model
+  // def optim with max loss()
+
   model = tf.sequential( {
     layers: [
       // Flattens the input to a vector so we can use it in a dense layer. While
       // technically a layer, this only performs a reshape (and has no training
       // parameters).
       tf.layers.flatten( {
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // truncatedMobileNet = running image into model
         inputShape: truncatedMobileNet.outputs[ 0 ].shape.slice( 1 )
       } ),
       // Layer 1.
