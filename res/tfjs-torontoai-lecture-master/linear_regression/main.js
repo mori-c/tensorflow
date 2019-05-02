@@ -8,8 +8,8 @@
 // Generate and plot some data
 const SLOPE = 1.8;
 const INTERCEPT = -0.3;
-const data = makeRandomData(xmin=-0.2, xmax=1.4, numpoints=100);
-plotData(data);
+const data = makeRandomData( xmin = -0.2, xmax = 1.4, numpoints = 100 );
+plotData( data );
 
 
 // ********
@@ -24,20 +24,37 @@ plotData(data);
 // In this case, a simple model for linear regression
 // (Dense layer with 1 weight and 1 bias, i.e. y = W*x + B)
 
+const model = tf.sequential();
+model.add( // y = mx * b
+    // call dense neuron layer
+    tf.layer.dense( {
+        // one weight * base
+        units: 1,
+        // define input space
+        inputShape: [ 1 ]
+    } )
+);
 
 
 // ********
 // (3). *** Define the optimizer parameters and compile model ***
 // ********
 
+// loss() with mean square
+// define optimizer with learning rate, otherwise stochastic algm or ada algm
+
 
 
 // ********
 // (4). *** Train the model ***
 // ********
-document.getElementById("trainModel").onclick = function(){
-    
+document.getElementById( "trainModel" ).onclick = function () {
+
     // add TFJS code here =============
+
+    // async js hack use .then() statement for a promise/call back/closures(?)
+    // plotloss(); defined if model is fit
+
 
 
     //document.getElementById('getRegLine').disabled = false;
@@ -49,11 +66,15 @@ document.getElementById("trainModel").onclick = function(){
 // ********
 // (5). *** Generate Predictions ***
 // ********
-document.getElementById("getRegLine").onclick = function(){
+document.getElementById( "getRegLine" ).onclick = function () {
 
     // add TFJS code here =============
 
-    
+    // call model to predict with data sync
+    // convert tf into an array
+    // get prediction from user input
+
+
     // ================================
 
     // plotDataAndRegLine(data, linePreds);
@@ -61,14 +82,22 @@ document.getElementById("getRegLine").onclick = function(){
 
 }
 
-document.getElementById("getPred").onclick = function(){
+document.getElementById( "getPred" ).onclick = function () {
 
     // let xInput = parseFloat(document.getElementById("xInput").value);
     // console.log('User Submitted:', xInput);
 
     // add TFJS code here =============
 
-    
+    // tensor is a scalar in vector dimensionality
+    // run datasync
+
+
+    // variable is the predicted value with array object
+    // get 1st value
+    // this is further regression line
+
+
     // ================================
 
     // document.getElementById('prediction').innerHTML = parseFloat(predVal.toFixed(3)); 
@@ -84,90 +113,95 @@ document.getElementById("getPred").onclick = function(){
 // *****************************
 
 // initial page element settings (get hoisted to the top of the script)
-document.getElementById('getRegLine').disabled = true;
-document.getElementById('getPred').disabled = true;
+document.getElementById( 'getRegLine' ).disabled = true;
+document.getElementById( 'getPred' ).disabled = true;
 
 
-function makeRandomData(xmin, xmax, numpoints, sigma=1.5){
+function makeRandomData( xmin, xmax, numpoints, sigma = 1.5 ) {
 
-    const x = Array(numpoints).fill().map(() => 
-        Math.random() * (xmax - xmin) + xmin
+    const x = Array( numpoints ).fill().map( () =>
+        Math.random() * ( xmax - xmin ) + xmin
     );
 
-    const y_noise = Array(numpoints).fill().map(() => 
+    const y_noise = Array( numpoints ).fill().map( () =>
         random_normal() * sigma - 0.5
     );
 
-    const y = x.map(function(num, idx){
-        return num*SLOPE + y_noise[idx] + INTERCEPT;
-    });
+    const y = x.map( function ( num, idx ) {
+        return num * SLOPE + y_noise[ idx ] + INTERCEPT;
+    } );
 
     return {
-        'x' : x,
-        'y' : y
+        'x': x,
+        'y': y
     }
 }
 
 // function for generating normally-distributed random numbers
 // between 0 and 1 based on the Box-Muller transform
 function random_normal() {
-    var u = 0, v = 0;
-    while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
-    while(v === 0) v = Math.random();
+    var u = 0,
+        v = 0;
+    while ( u === 0 ) u = Math.random(); //Converting [0,1) to (0,1)
+    while ( v === 0 ) v = Math.random();
     let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
     num = num / 10.0 + 0.5; // Translate to 0 -> 1
-    if (num > 1 || num < 0) return random_normal(); // resample between 0 and 1
+    if ( num > 1 || num < 0 ) return random_normal(); // resample between 0 and 1
     return num;
 }
 
 
-function plotData(dataObj){
+function plotData( dataObj ) {
 
-    const layout = {title: "Data"}
+    const layout = {
+        title: "Data"
+    }
 
     const dataTrace = {
-        x: data['x'],
-        y: data['y'],
+        x: data[ 'x' ],
+        y: data[ 'y' ],
         mode: 'markers',
         type: 'scatter',
         name: 'Raw Data'
     };
 
-    let traces = [dataTrace];
+    let traces = [ dataTrace ];
 
-    Plotly.newPlot('plotDiv', traces, layout); 
- 
+    Plotly.newPlot( 'plotDiv', traces, layout );
+
 }
 
 
-function plotDataAndRegLine(dataObj, regPreds){
+function plotDataAndRegLine( dataObj, regPreds ) {
 
-    const layout = {title: "Data"}
+    const layout = {
+        title: "Data"
+    }
 
     const dataTrace = {
-        x: data['x'],
-        y: data['y'],
+        x: data[ 'x' ],
+        y: data[ 'y' ],
         mode: 'markers',
         type: 'scatter',
         name: 'Raw Data'
     };
 
     const regLineTrace = {
-        x: data['x'],
+        x: data[ 'x' ],
         y: regPreds,
         mode: 'line',
         type: 'scatter',
         name: 'Regression Line'
     };
 
-    let traces = [dataTrace, regLineTrace];
+    let traces = [ dataTrace, regLineTrace ];
 
-    Plotly.newPlot('plotDiv', traces, layout); 
- 
+    Plotly.newPlot( 'plotDiv', traces, layout );
+
 }
 
 
-function plotLoss(modelHistory){
+function plotLoss( modelHistory ) {
 
     const loss = modelHistory.history.loss;
 
@@ -186,14 +220,14 @@ function plotLoss(modelHistory){
     }
 
     const lossTrace = {
-        x: [...Array(loss.length).keys()],
+        x: [ ...Array( loss.length ).keys() ],
         y: loss,
         mode: 'lines',
         type: 'scatter'
     };
 
-    let traces = [lossTrace];
+    let traces = [ lossTrace ];
 
-    Plotly.newPlot('lossDiv', traces, layout); 
- 
+    Plotly.newPlot( 'lossDiv', traces, layout );
+
 }

@@ -2,6 +2,12 @@
 ML Introductory Practice Using Tensorflow
 
 
+<br />
+### Overview
+* tf.js is 3-5x slower than GPU tf
+
+<br />
+<br />
 
 ## Setup
 
@@ -21,11 +27,38 @@ Python
 ```
 $ python3 -m http.server
 ```
+<br />
+<br />
+
+## Getting Started
+
+1. Fundamental
+
+tf.js /index.html
+```
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+```
+
+2. Tensors 
+
+multi-dimensional array vector
+
+3. CNN, tfjs-vis
+4. Memory management
+5. MNIST data with tf.js
 
 
-Notes:
+const xt = tf.tensor1d(xData); 
 
-* tf.js is 3-5x slower than GPU tf
+
+define loss / error()
+- of predicted output to actual output
+- checks parameter space, to min
+
+create linear regression
+
+stochastic descent
+
 
 
 <br />
